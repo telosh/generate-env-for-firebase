@@ -10,14 +10,15 @@ export default function Home() {
   };
 
   const handleDownload = () => {
-    const regex = /apiKey:\s*"([^"]+)",\s*authDomain:\s*"([^"]+)",\s*projectId:\s*"([^"]+)",\s*storageBucket:\s*"([^"]+)",\s*messagingSenderId:\s*"([^"]+)",\s*appId:\s*"([^"]+)",\s*measurementId:\s*"([^"]+)"/;
+    const regex = /apiKey:\s*"([^"]+)",\s*authDomain:\s*"([^"]+)",\s*databaseURL:\s*"([^"]+)",\s*projectId:\s*"([^"]+)",\s*storageBucket:\s*"([^"]+)",\s*messagingSenderId:\s*"([^"]+)",\s*appId:\s*"([^"]+)",\s*measurementId:\s*"([^"]+)"/;
     const match = configString.match(regex);
-    
+
     if (match) {
       const [
         _,
         apiKey,
         authDomain,
+        databaseURL,
         projectId,
         storageBucket,
         messagingSenderId,
@@ -27,13 +28,14 @@ export default function Home() {
 
       // 個々の値を変えることでenvに記載される名称も変更可能
       const envContent = `
-        NEXT_PUBLIC_FIREBASE_API_KEY=${apiKey}
-        NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${authDomain}
-        NEXT_PUBLIC_FIREBASE_PROJECT_ID=${projectId}
-        NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=${storageBucket}
-        NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${messagingSenderId}
-        NEXT_PUBLIC_FIREBASE_APP_ID=${appId}
-        NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${measurementId}
+NEXT_PUBLIC_FIREBASE_API_KEY=${apiKey}
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=${authDomain}
+NEXT_PUBLIC_FIREBASE_DATABASE_URL=${databaseURL}
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=${projectId}
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=${storageBucket}
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=${messagingSenderId}
+NEXT_PUBLIC_FIREBASE_APP_ID=${appId}
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=${measurementId}
       `.trim();
 
       const blob = new Blob([envContent], { type: 'text/plain' });
